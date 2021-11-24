@@ -77,6 +77,21 @@ export default {
     successful: "操作成功",
     registrationSuccess: "注册成功",
     goLogin: "去登录",
+    confirm: "确定",
+    pleaseEnterNewPassword: "请输入新的密码",
+    pleaseConfirmNewPassword: "请确认新的密码",
+    newsNotification: "新闻通知",
+    gettingStarted: "入门教程",
+    prohibitedItems: "禁运物品",
+    commonProblem: "常见问题",
+    helpSupport: '帮助与支持',
+    newsAnnouncement: "新闻公告",
+    myBalance: "我的余额",
+    availableBalance: "可用余额",
+    recharge: "充值",
+    credits: "信用额度",
+    expenditure: '支出',
+    income: "收入",
 
 
 

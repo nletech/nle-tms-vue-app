@@ -57,7 +57,6 @@ function interceptorsResponse(config) {
   }
   return config.data;
 }
-
 function interceptorsResponseError(error) {
   const {
     response

@@ -1,4 +1,4 @@
-<template>
+   <template>
   <!-- 预约寄件 -->
   <div class="ship-appointment">
     <nav-bar

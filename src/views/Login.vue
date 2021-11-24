@@ -89,13 +89,18 @@
 </template>
 
 <script>
-import { ref, reactive } from "vue";
+import { ref, reactive, onMounted } from "vue";
 import { useStore } from "vuex";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import { Button, Toast, Field, Form, Icon, Checkbox } from "vant";
 import NavBar from "../components/NavBar.vue";
 import $api from "../api/index";
-import { ORDER_MEAL_TOKEN } from "../store";
+import {
+  ORDER_MEAL_TOKEN,
+  CURRENCY_UNIT,
+  VOLNME_UNIT,
+  WEIGHT_UNIT,
+} from "../store";
 import { useI18n } from "vue-i18n"; //要在js中使用国际化
 export default {
   name: "login",
@@ -133,7 +138,7 @@ export default {
       password: "",
       checked: false,
     });
-    const viewType = ref("password");//判断密码 显示
+    const viewType = ref("password"); //判断密码 显示
     const onSubmit = async (values) => {
       submitLoading.value = true;
       try {
@@ -141,20 +146,32 @@ export default {
         if (res && res.code === 200) {
           Toast.success(t("loginSuccessful"));
           store.commit(ORDER_MEAL_TOKEN, res.data.access_token);
-          store.dispatch("initCart", res.data);
-          store.dispatch("getUserInfo");
-          routerIsFrom.value;
-          if (routerIsFrom.value) {
-            router.push("/");
-          } else {
-            router.back();
-          }
+          store.commit(
+            CURRENCY_UNIT,
+            res.data.company_config.currency_unit_symbol
+          );
+          store.commit(VOLNME_UNIT, res.data.company_config.volume_unit_symbol);
+          store.commit(WEIGHT_UNIT, res.data.company_config.weight_unit_symbol);
+          router.push("/");
+          // if (routerIsFrom.value) {
+          //   router.push("/");
+          // } else {
+          //   router.back();
+          // }
+        } else {
+          Toast(res.msg);
         }
         submitLoading.value = false;
       } catch (error) {
         submitLoading.value = false;
       }
     };
+    const getService = () => {
+      $api.getService().then((res) => {});
+    };
+    onMounted(() => {
+      // getService();
+    });
     return {
       routerIsFrom,
       emailValidator,
@@ -182,9 +199,9 @@ export default {
     width: 90%;
     margin: 0 auto;
     // :deep(.van-cell) {
-      // margin: 10px 0;
-      // background-color: #f1f1f1;
-      // border-radius: 5px;
+    // margin: 10px 0;
+    // background-color: #f1f1f1;
+    // border-radius: 5px;
     // }
     .forget {
       text-align: right;

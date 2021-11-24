@@ -17,7 +17,7 @@
         <div class="my-purse">
           {{ $t("myPurse") }}
         </div>
-        <div class="num">100000</div>
+        <div class="num" @click="$router.push('/myBalance')">100000</div>
         <div class="balance">{{ $t("balance") }}</div>
       </div>
       <div class="cell">
@@ -60,7 +60,12 @@
 <script>
 import { computed } from "vue";
 import { useStore } from "vuex";
-import { ORDER_MEAL_TOKEN } from "../store";
+import {
+  ORDER_MEAL_TOKEN,
+  CURRENCY_UNIT,
+  VOLNME_UNIT,
+  WEIGHT_UNIT,
+} from "../store";
 import { Image as VanImage, Cell, Button, Dialog } from "vant";
 import { useI18n } from "vue-i18n"; //要在js中使用国际化
 import { useRouter } from "vue-router";
@@ -80,6 +85,9 @@ export default {
       })
         .then(() => {
           store.commit(ORDER_MEAL_TOKEN, "");
+          store.commit(CURRENCY_UNIT, "");
+          store.commit(VOLNME_UNIT, "");
+          store.commit(WEIGHT_UNIT, "");
           router.push("/login");
         })
         .catch(() => {});

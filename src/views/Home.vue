@@ -2,9 +2,22 @@
   <!-- 首页 -->
   <nav-bar title="TMS" :needBack="false"></nav-bar>
   <div class="home-box">
-    <van-swipe :autoplay="3000" lazy-render indicator-color="white">
-      <van-swipe-item v-for="image in images" :key="image">
-        <img :src="image.img" class="home-img" />
+    <van-swipe
+      :autoplay="rollingTime"
+      lazy-render
+      indicator-color="white"
+      style="height: 180px"
+    >
+      <van-swipe-item v-for="item in images" :key="item">
+        <img
+          v-if="item.jump_type == 1"
+          :src="item.picture_url"
+          class="home-img"
+          @click="toRouter(item)"
+        />
+        <a :href="item.outside_jump_url" v-else>
+          <img :src="item.picture_url" class="home-img" />
+        </a>
       </van-swipe-item>
     </van-swipe>
     <van-notice-bar left-icon="volume-o" background="#fff" class="notice-title">
@@ -30,7 +43,7 @@
       </div>
     </div>
     <div class="list">
-      <div v-for="item in list" :key="item">
+      <div v-for="item in list" :key="item" @click="$router.push(item.router)">
         <img :src="item.img" alt="" />
         <div class="list-title">{{ item.title }}</div>
         <div class="list-introduce">{{ item.introduce }}</div>
@@ -44,6 +57,8 @@ import { Swipe, SwipeItem, NoticeBar, Icon } from "vant";
 import NavBar from "../components/NavBar.vue";
 import { useI18n } from "vue-i18n"; //要在js中使用国际化
 import { useRouter } from "vue-router";
+import { ref, onMounted } from "vue";
+import $api from "../api/index";
 export default {
   components: {
     NavBar,
@@ -55,35 +70,66 @@ export default {
   setup() {
     const router = useRouter();
     const { t } = useI18n();
-    const images = [
-      {
-        img: "../../public/home-img/img.png",
-      },
-      {
-        img: "../../public/home-img/img.png",
-      },
-      {
-        img: "../../public/home-img/img.png",
-      },
-    ];
+    const images = ref([]);
+    const rollingTime = ref("");
     const list = [
       {
         img: "../../public/home-img/img-1.png",
         title: t("freightEstimate"),
         introduce: t("userEstimateShipping"),
+        router: "/",
       },
       {
         img: "../../public/home-img/img-2.png",
         title: t("onlineEnquiry"),
         introduce: t("userNetworkQuery"),
+        router: "/",
       },
       {
         img: "../../public/home-img/img-3.png",
         title: t("helpAndSupport"),
         introduce: t("understandShippingConsiderations"),
+        router: "/helpSupport",
       },
     ];
+    // 跳转路由
+    const toRouter = (item) => {
+      if (item.inside_jump_type == 1) {
+        router.push("/newsNotification");
+      } else if (item.inside_jump_type == 2) {
+        router.push("/gettingStarted");
+      } else if (item.inside_jump_type == 3) {
+        router.push("/prohibitedItems");
+      } else if (item.inside_jump_type == 4) {
+        router.push("/commonProblem");
+      }
+    };
+    //轮播图
+    const getCarousel = () => {
+      $api.getCarousel().then((res) => {
+        images.value = res.data.data;
+        // 获取滚动时长
+        res.data.data.map((el) => {
+          if (el.rolling_time == 1) {
+            return (rollingTime.value = 1000);
+          } else if (el.rolling_time == 2) {
+            return (rollingTime.value = 2000);
+          } else if (el.rolling_time == 3) {
+            return (rollingTime.value = 3000);
+          } else if (el.rolling_time == 4) {
+            return (rollingTime.value = 4000);
+          } else if (el.rolling_time == 5) {
+            return (rollingTime.value = 5000);
+          }
+        });
+      });
+    };
+    onMounted(() => {
+      getCarousel();
+    });
     return {
+      toRouter,
+      rollingTime,
       images,
       list,
       router,
@@ -151,9 +197,9 @@ export default {
     }
   }
   /deep/.van-swipe__indicator {
-    margin-bottom: 10px;
-    width: 10px;
-    height: 10px;
+    margin-bottom: 5px;
+    width: 7px;
+    height: 7px;
   }
 }
 </style>

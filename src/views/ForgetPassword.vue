@@ -1,5 +1,5 @@
 <template>
-  <div class="register" id="container">
+  <div class="forget-password" id="container">
     <div class="logo">
       <img src="../assets/login-logo.jpg" style="width: 100px" alt="" />
       <h1>红兔TMS</h1>
@@ -42,30 +42,30 @@
         :placeholder="$t('pleaseEnterVerificationCode')"
       />
       <van-field
-        v-model="state.password"
+        v-model="state.new_password"
         left-icon="../../public/login-icon/password.png"
-        name="password"
+        name="new_password"
         :type="viewType"
         :rules="[
           {
             required: true,
-            message: $t('pleaseEnterThePassword'),
+            message: $t('pleaseEnterNewPassword'),
           },
         ]"
-        :placeholder="$t('pleaseEnterThePassword')"
+        :placeholder="$t('pleaseEnterNewPassword')"
       />
       <van-field
-        v-model="state.confirm_password"
+        v-model="state.confirm_new_password"
         left-icon="../../public/login-icon/password.png"
-        name="confirm_password"
+        name="confirm_new_password"
         :type="viewType"
         :rules="[
           {
             required: true,
-            message: $t('pleaseConfirmPassword'),
+            message: $t('pleaseConfirmNewPassword'),
           },
         ]"
-        :placeholder="$t('pleaseConfirmPassword')"
+        :placeholder="$t('pleaseConfirmNewPassword')"
       />
 
       <van-button
@@ -76,9 +76,9 @@
         :loading="submitLoading"
         native-type="submit"
       >
-        {{ $t("register") }}
+        {{ $t("confirm") }}
       </van-button>
-      <van-field
+      <!-- <van-field
         name="checkbox"
         class="checkbox"
         :rules="[
@@ -96,7 +96,7 @@
             </span>
           </van-checkbox>
         </template>
-      </van-field>
+      </van-field> -->
     </van-form>
   </div>
 </template>
@@ -119,7 +119,6 @@ export default {
     [Checkbox.name]: Checkbox,
   },
   setup() {
-    const url = window.location.host;
     const { t } = useI18n();
     const time = ref(60);
     const router = useRouter();
@@ -128,19 +127,17 @@ export default {
     const state = reactive({
       email: "",
       code: "",
-      password: "",
-      confirm_password: "",
-      url: url,
-      checked: false,
+      new_password: "",
+      confirm_new_password: "",
     });
     const viewType = ref("password");
     const onRegister = async (values) => {
       submitLoading.value = true;
       try {
-        const res = await $api.register(state);
+        const res = await $api.getResetPassword(state);
         if (res && res.code === 200) {
-          Toast.success(t("registrationSuccess"));
-          router.push("/registrationSuccess");
+          Toast.success(t("successful"));
+          router.push("/login");
         } else {
           Toast(res.msg);
         }
@@ -155,7 +152,7 @@ export default {
         return;
       }
       try {
-        const res = await $api.getResetRegisterEmailCode({
+        const res = await $api.getResetPasswordEmailCode({
           email: state.email,
         });
         if (res && res.code === 200) {
@@ -190,7 +187,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.register {
+.forget-password {
   height: 100vh;
   overflow: hidden;
   position: relative;

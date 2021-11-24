@@ -78,6 +78,28 @@ export default {
     successful: "successful",
     registrationSuccess: "registration success",
     goLogin: "Go to login",
+    confirm: "Confirm",
+    pleaseEnterNewPassword: "Please enter a new password",
+    pleaseConfirmNewPassword: "Please confirm new password",
+    newsNotification: "News notification",
+    gettingStarted: "Getting started",
+    prohibitedItems: "Prohibited items",
+    commonProblem: "Common problem",
+    helpSupport: 'Help support',
+    newsAnnouncement: "News Announcement",
+    myBalance: "My balance",
+    availableBalance: "Available Balance",
+    recharge: "Recharge",
+    credits: "Credits",
+    expenditure: 'Expenditure',
+    income: "Income",
+
+
+
+
+
+
+
 
 
 

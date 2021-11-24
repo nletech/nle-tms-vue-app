@@ -47,6 +47,7 @@
                 type="primary"
                 plain
                 size="mini"
+                @click="$router.push('/googleMap')"
               >
                 {{ $t("position") }}
               </van-button>
@@ -82,7 +83,10 @@ export default {
   .from {
     margin-top: 20px;
     .footer-btn {
+      width: 93%;
       margin: 16px;
+      position: absolute;
+      bottom: 10px;
     }
   }
 }
