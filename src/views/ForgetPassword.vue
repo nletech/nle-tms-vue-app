@@ -1,4 +1,5 @@
 <template>
+<!-- 忘记密码 -->
   <div class="forget-password" id="container">
     <div class="logo">
       <img src="../assets/login-logo.jpg" style="width: 100px" alt="" />

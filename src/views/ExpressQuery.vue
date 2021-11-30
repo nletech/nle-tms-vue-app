@@ -2,14 +2,16 @@
   <!-- 快件查询 -->
   <div class="express-query">
     <nav-bar :title="$t('expressQuery')" :needBack="false"></nav-bar>
+    <!-- v-model="value" -->
+
     <van-search
-      v-model="value"
       shape="round"
       background="#fff"
       :placeholder="$t('enterOrderNumberQuery')"
     />
     <van-tabs
       v-model:active="active"
+      @change="onTabChange"
       color="#2DC18C"
       title-active-color="#2DC18C"
       sticky
@@ -76,7 +78,6 @@
                   <!-- <van-button round size="small" plain type="warning">{{
                     $t("anotherOrder")
                   }}</van-button> -->
-                 
                 </div>
               </div>
             </div>
@@ -92,6 +93,7 @@ import { ref, reactive } from "vue";
 import NavBar from "../components/NavBar.vue";
 import { Tab, Tabs, Search, List, PullRefresh, Button } from "vant";
 import { useI18n } from "vue-i18n"; //要在js中使用国际化
+import $api from "../api/index";
 
 export default {
   components: {
@@ -104,17 +106,13 @@ export default {
     [Button.name]: Button,
   },
   setup() {
+    const active = ref(0);
     const { t } = useI18n();
-
     const tabsList = reactive([
       {
         id: 0,
         name: t("all"),
-        list: [
-          { order_no: "r14132442" },
-          { order_no: "r14132442" },
-          { order_no: "r14132442" },
-        ],
+        list: [],
         loading: false,
         finished: false,
         refreshing: false,
@@ -128,7 +126,7 @@ export default {
         refreshing: false,
       },
       {
-        id: 2,
+        id: 1,
         name: t("assigned"),
         list: [],
         loading: false,
@@ -136,7 +134,7 @@ export default {
         refreshing: false,
       },
       {
-        id: 3,
+        id: 4,
         name: t("pickingUp"),
         list: [],
         loading: false,
@@ -144,7 +142,7 @@ export default {
         refreshing: false,
       },
       {
-        id: 4,
+        id: 5,
         name: t("haveBeenReceived"),
         list: [],
         loading: false,
@@ -152,16 +150,35 @@ export default {
         refreshing: false,
       },
     ]);
-    const onLoad = () => {};
+    const onLoad = (val) => {
+      $api.getOrder({ per_page: 10, status: val }).then((res) => {
+        if (tabsList[active.value].refreshing) {
+          tabsList[active.value].list = [];
+          tabsList[active.value].refreshing = false;
+        }
+        tabsList[active.value].list.push(...res.data.data);
+        tabsList[active.value].loading = false;
+
+        if (tabsList[active.value].list.length >= res.data.total) {
+          tabsList[active.value].finished = true;
+        }
+      });
+    };
     const onRefresh = () => {
       tabsList[active.value].refreshing = true;
       tabsList[active.value].finished = false;
       tabsList[active.value].loading = true;
       onLoad();
     };
+    const onTabChange = (val) => {
+      onLoad(val);
+    };
     return {
+      active,
       tabsList,
       onRefresh,
+      onLoad,
+      onTabChange,
     };
   },
 };

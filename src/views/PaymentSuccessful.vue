@@ -1,6 +1,5 @@
 <template>
-  <!-- 新闻通知 -->
-  <div class="news-notification"></div>
+  <div>支付成功</div>
 </template>
 
 <script>

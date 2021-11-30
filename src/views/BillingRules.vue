@@ -57,8 +57,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import NavBar from "../components/NavBar.vue";
 import { useStore } from "vuex";
 import $api from "../api/index";

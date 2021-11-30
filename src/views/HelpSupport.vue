@@ -16,14 +16,17 @@
     <div>
       <h4>{{ $t("newsAnnouncement") }}</h4>
       <div class="cell">
-        <van-cell
-          center
-          :title="$t('addressBook')"
-          is-link
-          to="home"
-          label="描述信息"
-          title-style="text-align: left"
-        />
+        <van-cell-group v-for="item in newsData" :key="item">
+          <van-cell
+            center
+            :title="item.tittle"
+            is-link
+            to="articleDetails"
+            :label="item.updated_at"
+            title-style="text-align: left"
+            @click="toArticleDetails(item)"
+          />
+        </van-cell-group>
       </div>
     </div>
   </div>
@@ -32,17 +35,22 @@
 <script>
 import NavBar from "../components/NavBar.vue";
 import { useI18n } from "vue-i18n"; //要在js中使用国际化
-import { Cell } from "vant";
+import { CellGroup, Cell } from "vant";
 import $api from "../api/index";
-import { onMounted } from "@vue/runtime-core";
+import { useRouter } from "vue-router";
+import { ref, onMounted } from "@vue/runtime-core";
 
 export default {
   components: {
     NavBar,
+    [CellGroup.name]: CellGroup,
     [Cell.name]: Cell,
   },
   setup() {
     const { t } = useI18n();
+    const newsData = ref([]);
+    const router = useRouter();
+
     const list = [
       {
         img: "../../public/home-img/getting-started.png",
@@ -61,13 +69,32 @@ export default {
       },
     ];
     const getArticle = () => {
-      $api.getArticle().then((res) => {});
+      $api.getArticle().then((res) => {
+        let data = res.data.data;
+        data.map((el) => {
+          if (el.type == 1) {
+            newsData.value.push(el);
+          }
+        });
+      });
+    };
+    const toArticleDetails = (item) => {
+      router.push({
+        name: "ArticleDetails",
+        query: {
+          tittle: item.tittle,
+          time: item.updated_at,
+          text: item.text,
+        },
+      });
     };
     onMounted(() => {
       getArticle();
     });
     return {
       list,
+      newsData,
+      toArticleDetails,
     };
   },
 };
@@ -75,7 +102,7 @@ export default {
 
 <style lang="less" scoped>
 .help-support {
-  min-height: 100vh;
+  min-height: calc(100vh - 86px);
   padding: 10px;
   .img {
     width: 100%;
@@ -100,7 +127,7 @@ export default {
     }
   }
   .cell {
-    padding: 3px;
+    padding: 0 5px;
     border-radius: 10px;
     background-color: #fff;
   }

@@ -10,36 +10,35 @@
       <van-form @submit="onSubmit">
         <van-cell-group inset>
           <van-field
-            v-model="username"
+            v-model="form.contacter"
             input-align="right"
-            :name="$t('name')"
+            name="contacter"
             :label="$t('name')"
             :placeholder="$t('pleaseTypeYourName')"
             :rules="[{ required: true, message: $t('pleaseTypeYourName') }]"
           />
           <van-field
-            v-model="password"
+            v-model="form.phone"
             input-align="right"
-            :name="$t('contactNumber')"
+            name="phone"
             :label="$t('contactNumber')"
             :placeholder="$t('pleaseEnterPhoneNumber')"
             :rules="[{ required: true, message: $t('pleaseEnterPhoneNumber') }]"
           />
           <van-field
-            v-model="password"
+            v-model="form.email"
             input-align="right"
-            :name="$t('mail')"
+            name="email"
             :label="$t('mail')"
             :placeholder="$t('pleaseInputYourEmail')"
             :rules="[{ required: true, message: $t('pleaseInputYourEmail') }]"
           />
 
           <van-field
-            v-model="sms"
-            center
-            clearable
+            v-model="form.address"
+            name="address"
+            input-align="right"
             :label="$t('contactAddress')"
-            :rules="[{ required: true, message: $t('pleaseInputYourEmail') }]"
           >
             <template #button>
               <van-button
@@ -55,7 +54,13 @@
           </van-field>
         </van-cell-group>
         <div class="footer-btn">
-          <van-button round block type="success" native-type="submit">
+          <van-button
+            round
+            block
+            type="success"
+            native-type="submit"
+            :loading="submitLoading"
+          >
             {{ $t("save") }}
           </van-button>
         </div>
@@ -65,8 +70,12 @@
 </template>
 
 <script>
+import { ref, onMounted } from "vue";
 import NavBar from "../components/NavBar.vue";
-import { Form, Field, CellGroup, Button } from "vant";
+import { Form, Field, CellGroup, Button, Toast } from "vant";
+import $api from "../api/index";
+import { useI18n } from "vue-i18n"; //要在js中使用国际化
+
 export default {
   components: {
     NavBar,
@@ -74,6 +83,38 @@ export default {
     [Field.name]: Field,
     [CellGroup.name]: CellGroup,
     [Button.name]: Button,
+  },
+  setup() {
+    const { t } = useI18n();
+    const form = ref({});
+    const submitLoading = ref(false);
+    const getMerchant = () => {
+      $api.getMerchant().then((res) => {
+        form.value = res.data;
+      });
+    };
+    const onSubmit = async (values) => {
+      submitLoading.value = true;
+      try {
+        const res = await $api.putMerchant(form.value);
+        if (res && res.code == 200) {
+          getMerchant();
+          submitLoading.value = false;
+
+          Toast.success(t("successful"));
+        }
+      } catch (error) {
+        submitLoading.value = false;
+      }
+    };
+    onMounted(() => {
+      getMerchant();
+    });
+    return {
+      form,
+      onSubmit,
+      submitLoading,
+    };
   },
 };
 </script>
@@ -83,9 +124,8 @@ export default {
   .from {
     margin-top: 20px;
     .footer-btn {
-      width: 93%;
       margin: 16px;
-      position: absolute;
+      // position: fixed;
       bottom: 10px;
     }
   }

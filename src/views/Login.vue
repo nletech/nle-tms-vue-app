@@ -1,4 +1,5 @@
 <template>
+<!-- 登录 -->
   <div class="login" id="container">
     <div class="logo">
       <img src="../assets/login-logo.jpg" style="width: 100px" alt="" />
@@ -143,8 +144,9 @@ export default {
       submitLoading.value = true;
       try {
         const res = await $api.login(values);
-        if (res && res.code === 200) {
+        if (res && res.code == 200) {
           Toast.success(t("loginSuccessful"));
+          router.push("/");
           store.commit(ORDER_MEAL_TOKEN, res.data.access_token);
           store.commit(
             CURRENCY_UNIT,
@@ -152,7 +154,7 @@ export default {
           );
           store.commit(VOLNME_UNIT, res.data.company_config.volume_unit_symbol);
           store.commit(WEIGHT_UNIT, res.data.company_config.weight_unit_symbol);
-          router.push("/");
+          store.commit(GOOGLE_MAP, res.data.company_config.country);
           // if (routerIsFrom.value) {
           //   router.push("/");
           // } else {
@@ -170,7 +172,7 @@ export default {
       $api.getService().then((res) => {});
     };
     onMounted(() => {
-      // getService();
+      getService();
     });
     return {
       routerIsFrom,

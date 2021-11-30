@@ -93,14 +93,19 @@ export default {
     credits: "Credits",
     expenditure: 'Expenditure',
     income: "Income",
-
-
-
-
-
-
-
-
+    pleaseEnterAddress: "Please enter the address",
+    shippingAddress: "Shipping address",
+    senderAddress: "Sender address",
+    addAddressLibrary: "Add address library",
+    paymentCompleted: 'Payment completed',
+    more: 'more',
+    pleaseSelectRechargeAmount: "Please select the recharge amount",
+    otherRechargeAmount: "Other recharge amount",
+    pleaseEnterAnotherRechargeAmount: "Please enter another recharge amount",
+    paymentMethod: "Payment method",
+    payImmediately: "Pay immediately",
+    paymentSuccessful: "Payment successful",
+    enterUpTo: "Greater than 0 less than 100000",
 
 
 

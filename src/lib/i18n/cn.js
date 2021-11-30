@@ -92,7 +92,18 @@ export default {
     credits: "信用额度",
     expenditure: '支出',
     income: "收入",
-
-
+    pleaseEnterAddress: "请输入地址",
+    shippingAddress: "收件地址",
+    senderAddress: "发件地址",
+    addAddressLibrary: "新增地址库",
+    paymentCompleted: '支付完成',
+    more: '更多',
+    pleaseSelectRechargeAmount: "请选择充值金额",
+    otherRechargeAmount: "其他充值金额",
+    pleaseEnterAnotherRechargeAmount: "请输入其他充值金额",
+    paymentMethod: "支付方式",
+    payImmediately: "立即支付",
+    paymentSuccessful: "支付成功",
+    enterUpTo: "大于0小于100000",
 
 }

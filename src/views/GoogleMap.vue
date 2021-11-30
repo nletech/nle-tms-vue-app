@@ -4,37 +4,37 @@
     :needBack="ture"
     :onClickLeft="() => $router.go(-1)"
   ></nav-bar>
-
-  <div class="google-map">
-    <div class="control-box">
-      <div class="control-panel">
+  <div class="google-map-box">
+    <div class="google-map">
+      <div class="control-box">
         <van-field
-          clearable
-          v-model="value"
-          label="文本"
-          placeholder="请输入用户名"
           id="pac_input"
+          size="small"
+          v-model="searchBoxValue"
+          :placeholder="$t('pleaseEnterAddress')"
         />
       </div>
+      <GoogleMap
+        ref="mapRef"
+        id="map"
+        :api-key="key"
+        style="width: 100%; height: 100%"
+        :zoom="12"
+        :center="center"
+        language="zh-CN"
+      >
+        <Marker :options="{ position: shopLat }" />
+        <Marker :options="{ position: clientLat }" />
+      </GoogleMap>
     </div>
-    <GoogleMap
-      ref="mapRef"
-      id="map"
-      :api-key="key"
-      style="width: 100%; height: 500px"
-      :zoom="12"
-      :center="center"
-      language="zh-CN"
-    >
-      <!-- <Marker :options="{ position: shopLat }" /> -->
-      <!-- <Marker :options="{ position: clientLat }" /> -->
-    </GoogleMap>
   </div>
 </template>
 
 <script>
+import { reactive, ref } from "vue";
 import { Field } from "vant";
 import NavBar from "../components/NavBar.vue";
+import { useStore } from "vuex";
 import { GoogleMap, Marker, Polyline } from "vue3-google-map";
 
 export default {
@@ -46,31 +46,45 @@ export default {
     Polyline,
   },
   setup() {
+    const store = useStore();
+    const searchBoxValue = ref("");
+    const center = reactive({
+      lat: 52.666666,
+      lng: -10.33333,
+      disableDefaultUI: true,
+    });
+    // const country = computed(() => store.state.country);
     const key = "AIzaSyADSJjhz-C62Kp69blJBBo71fqNyC7oZkY";
     return {
+      searchBoxValue,
       key,
+      center,
     };
   },
 };
 </script>
 
 <style lang="less" scoped>
-.google-map {
-  position: relative;
-  // width: 100%;
-  height: 80.6vh;
-  padding: 10px;
-  .control-box {
+.google-map-box {
+  .google-map {
+    width: 100%;
+    height: 90vh;
     position: relative;
-    .control-panel {
-      font-size: 13px;
-      cursor: pointer;
-      color: #53d9a9;
-    }
-    #pac_input {
-      // 禁止搜索框的位置移动
+    .control-box {
+      width: 300px;
+      height: 100px;
+      border-radius: 10px;
+      background-color: #fff;
       position: absolute;
-      left: 20px !important;
+      top: 5px;
+      left: 10px;
+      z-index: 9999;
+      .van-field {
+        // width: 200px;
+        margin-top: 10px;
+        text-align: center;
+        // background-color: gray;
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 <template>
+  <!-- 注册 -->
   <div class="register" id="container">
     <div class="logo">
       <img src="../assets/login-logo.jpg" style="width: 100px" alt="" />

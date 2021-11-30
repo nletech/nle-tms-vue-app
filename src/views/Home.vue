@@ -20,12 +20,20 @@
         </a>
       </van-swipe-item>
     </van-swipe>
-    <van-notice-bar left-icon="volume-o" background="#fff" class="notice-title">
-      <div class="notice">
-        <div>技术是开发它的人的共同灵魂。</div>
-        <div>更多</div>
+    <div class="notice-title">
+      <van-notice-bar
+        left-icon="volume-o"
+        background="#fff"
+        class="notice"
+        @click="toArticleDetails(news)"
+      >
+        {{ news.tittle }}
+      </van-notice-bar>
+      <div class="more" @click="$router.push('/helpSupport')">
+        {{ $t("more") }}
       </div>
-    </van-notice-bar>
+    </div>
+
     <div class="ship-appointment" @click="$router.push('/shipByAppointment')">
       <div class="appointment">
         <img src="../../public/home-img/send.png" alt="" />
@@ -72,6 +80,7 @@ export default {
     const { t } = useI18n();
     const images = ref([]);
     const rollingTime = ref("");
+    const news = ref({});
     const list = [
       {
         img: "../../public/home-img/img-1.png",
@@ -95,7 +104,7 @@ export default {
     // 跳转路由
     const toRouter = (item) => {
       if (item.inside_jump_type == 1) {
-        router.push("/newsNotification");
+        router.push("/helpSupport");
       } else if (item.inside_jump_type == 2) {
         router.push("/gettingStarted");
       } else if (item.inside_jump_type == 3) {
@@ -124,8 +133,30 @@ export default {
         });
       });
     };
+    const getArticle = () => {
+      $api.getArticle().then((res) => {
+        let data = [];
+        res.data.data.map((el) => {
+          if (el.type == 1) {
+            data.push(el);
+            news.value = data[0];
+          }
+        });
+      });
+    };
+    const toArticleDetails = (item) => {
+      router.push({
+        name: "ArticleDetails",
+        query: {
+          tittle: item.tittle,
+          time: item.updated_at,
+          text: item.text,
+        },
+      });
+    };
     onMounted(() => {
       getCarousel();
+      getArticle();
     });
     return {
       toRouter,
@@ -133,6 +164,8 @@ export default {
       images,
       list,
       router,
+      news,
+      toArticleDetails,
     };
   },
 };
@@ -147,12 +180,21 @@ export default {
     width: 100%;
     height: 180px;
   }
+  /deep/.van-notice-bar {
+    width: 80% !important;
+  }
   .notice-title {
+    display: flex;
+    align-items: center;
     .notice {
-      display: flex;
-      justify-content: space-between;
+      cursor: pointer;
+    }
+    .more {
+      cursor: pointer;
+      color: #ed6a0c;
     }
   }
+
   .ship-appointment {
     height: 100px;
     background-color: #f5f9f7;

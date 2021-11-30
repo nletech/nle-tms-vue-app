@@ -1,5 +1,6 @@
 <template>
   <van-nav-bar
+    class="nav-bar"
     :title="title"
     @click-left="clickLeft"
     :right-text="rightText"
@@ -46,3 +47,10 @@ export default {
   },
 };
 </script>
+<style lang="less">
+// .nav-bar {
+//   position: sticky;
+//   top: 0;
+//   z-index: 999;
+// }
+</style>

@@ -1,4 +1,5 @@
 <template>
+  <!-- 注册成功 -->
   <div class="registration-success">
     <div class="logo">
       <img src="../assets/login-logo.jpg" style="width: 100px" alt="" />

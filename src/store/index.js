@@ -8,6 +8,8 @@ export const UPDATE_USER_INFO = 'UPDATE_USER_INFO'
 export const CURRENCY_UNIT = 'CURRENCY_UNIT'
 export const VOLNME_UNIT = 'VOLNME_UNIT'
 export const WEIGHT_UNIT = 'WEIGHT_UNIT'
+export const GOOGLE_MAP = 'GOOGLE_MAP'
+
 
 export const UPDATE_SELECTED_GOODS = 'UPDATE_SELECTED_GOODS'
 export const UPDATE_ALL_CART_GOODS = 'UPDATE_ALL_CART_GOODS'
@@ -23,6 +25,7 @@ const store = createStore({
     currencyUnit: '', //钱
     volumeUnit: '', //体积
     weightUnit: '', //重量
+    country: "",
     userInfo: {},
 
 
@@ -40,7 +43,7 @@ const store = createStore({
     },
     isFromCheckoutPage: false
   },
-  
+
   mutations: {
     [ORDER_MEAL_TOKEN](state, data) {
       state.token = data
@@ -58,6 +61,9 @@ const store = createStore({
       state.weightUnit = data
       localStorage.setItem(WEIGHT_UNIT, data)
     }, //重量
+    [GOOGLE_MAP](state, data) {
+      state.country = data
+    }, //地图
     [UPDATE_USER_INFO](state, data) {
       state.userInfo = data
     }, //公司信息

@@ -6,17 +6,22 @@
     :onClickLeft="() => $router.push('/helpSupport')"
   ></nav-bar>
   <div class="common-problem">
-    <div class="box">
+    <div
+      class="box"
+      v-for="item in data"
+      :key="item"
+      @click="toArticleDetails(item)"
+    >
       <div>
         <img
-          src="../../public/home-img/img-1.png"
+          :src="item.picture_url"
           alt=""
-          style="width: 120px; height: 70px"
+          style="width: 120px; height: 60px"
         />
       </div>
-      <div>
-        <div>打發大水發斯蒂芬</div>
-        <div style="color: #999999">打發大水發斯蒂芬</div>
+      <div class="tittle">
+        <div>{{ item.tittle }}</div>
+        <div style="color: #999999">{{ item.updated_at }}</div>
       </div>
     </div>
   </div>
@@ -24,9 +29,43 @@
 
 <script>
 import NavBar from "../components/NavBar.vue";
+import { ref, onMounted } from "@vue/runtime-core";
+import $api from "../api/index";
+import { useRouter } from "vue-router";
+
 export default {
   components: {
     NavBar,
+  },
+  setup() {
+    const data = ref([]);
+    const router = useRouter();
+    const getArticle = () => {
+      $api.getArticle().then((res) => {
+        res.data.data.map((el) => {
+          if (el.type == 4) {
+            data.value.push(el);
+          }
+        });
+      });
+    };
+    const toArticleDetails = (item) => {
+      router.push({
+        name: "ArticleDetails",
+        query: {
+          tittle: item.tittle,
+          time: item.updated_at,
+          text: item.text,
+        },
+      });
+    };
+    onMounted(() => {
+      getArticle();
+    });
+    return {
+      data,
+      toArticleDetails,
+    };
   },
 };
 </script>
@@ -41,6 +80,9 @@ export default {
     align-items: center;
     height: 70px;
     border-bottom: solid 1px #eaeaea;
+  }
+  .tittle {
+    margin-left: 10px;
   }
 }
 </style>

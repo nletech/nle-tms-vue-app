@@ -1,4 +1,5 @@
 <template>
+  <!-- 我的 -->
   <div class="me">
     <div class="header">
       <div class="header-box">
@@ -10,14 +11,14 @@
           src="../../public/me-img/me.png"
         >
         </van-image>
-        <h3>{{ "userInfo.id" }}</h3>
-        <h3>ID:00125</h3>
+        <h3>{{ userInfo.name }}</h3>
+        <h3>ID:{{ userInfo.company_code }}</h3>
       </div>
       <div class="paid">
         <div class="my-purse">
           {{ $t("myPurse") }}
         </div>
-        <div class="num" @click="$router.push('/myBalance')">100000</div>
+        <div class="num" @click="$router.push('/myBalance')">{{ balance }}</div>
         <div class="balance">{{ $t("balance") }}</div>
       </div>
       <div class="cell">
@@ -32,7 +33,7 @@
           icon="../../public/me-img/address-book.png"
           :title="$t('addressBook')"
           is-link
-          to="home"
+          to="AddressBook"
           title-style="text-align: left"
         />
         <van-cell
@@ -46,7 +47,7 @@
           icon="../../public/me-img/about.png"
           :title="$t('aboutUs')"
           is-link
-          to="home"
+          to="AboutUs"
           title-style="text-align: left"
         />
       </div>
@@ -58,7 +59,7 @@
 </template>
 
 <script>
-import { computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import {
   ORDER_MEAL_TOKEN,
@@ -69,6 +70,8 @@ import {
 import { Image as VanImage, Cell, Button, Dialog } from "vant";
 import { useI18n } from "vue-i18n"; //要在js中使用国际化
 import { useRouter } from "vue-router";
+import $api from "../api/index";
+
 export default {
   components: {
     [VanImage.name]: VanImage,
@@ -79,6 +82,7 @@ export default {
     const { t } = useI18n();
     const store = useStore();
     const router = useRouter();
+    const balance = ref();
     const logOut = () => {
       Dialog.confirm({
         message: t("areSureWantLogOut"),
@@ -92,11 +96,20 @@ export default {
         })
         .catch(() => {});
     };
+    const getLedger = () => {
+      $api.getLedger().then((res) => {
+        balance.value = res.data.balance;
+      });
+    };
     const userInfo = computed(() => store.state.userInfo);
-    store.dispatch("getUserInfo");
+    // store.dispatch("getUserInfo");
+    onMounted(() => {
+      getLedger();
+    });
     return {
       userInfo,
       logOut,
+      balance,
     };
   },
 };
@@ -139,6 +152,7 @@ export default {
       font-weight: 500;
       color: #2dc18c;
       margin: 5px 0px;
+      cursor: pointer;
     }
     .balance {
       margin-left: 23px;

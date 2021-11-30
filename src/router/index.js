@@ -10,24 +10,35 @@ const Login = loadonDemand('Login')
 const ForgetPassword = loadonDemand('ForgetPassword')
 const Register = loadonDemand('Register')
 const RegistrationSuccess = loadonDemand('RegistrationSuccess')
+
 const Home = loadonDemand('Home')
 const HelpSupport = loadonDemand('HelpSupport')
+const ArticleDetails = loadonDemand('ArticleDetails')
 const NewsNotification = loadonDemand('NewsNotification')
 const GettingStarted = loadonDemand('GettingStarted')
 const ProhibitedItems = loadonDemand('ProhibitedItems')
 const CommonProblem = loadonDemand('CommonProblem')
+const PaymentSuccessful = loadonDemand('PaymentSuccessful')
+
+
 const ExpressQuery = loadonDemand('ExpressQuery')
 const ShipByAppointment = loadonDemand('ShipByAppointment')
+
 const Me = loadonDemand('Me')
 const MyBalance = loadonDemand('MyBalance')
+const Recharge = loadonDemand('Recharge')
 const PersonalInformation = loadonDemand('PersonalInformation')
+const AddressBook = loadonDemand('AddressBook')
+const AddAddress = loadonDemand('AddAddress')
 const BillingRules = loadonDemand('BillingRules')
+const AboutUs = loadonDemand('AboutUs')
 const GoogleMap = loadonDemand('GoogleMap')
 
 
 
 const router = createRouter({
-    mode: 'history',
+    // mode: 'history',
+    // history: createWebHistory(),去掉#的模式
     base: '/',
     history: createWebHashHistory(),
     routes: [{
@@ -78,6 +89,14 @@ const router = createRouter({
                 tabbar: false
             }
         }, //帮助与支持
+        {
+            path: '/articleDetails',
+            component: ArticleDetails,
+            name: 'ArticleDetails',
+            meta: {
+                tabbar: false
+            }
+        }, //文章详情
         {
             path: '/newsNotification',
             component: NewsNotification,
@@ -144,6 +163,22 @@ const router = createRouter({
             }
         }, //我的余额
         {
+            path: '/recharge',
+            component: Recharge,
+            name: 'Recharge',
+            meta: {
+                tabbar: false
+            }
+        }, //充值
+        {
+            path: '/paymentSuccessful',
+            component: PaymentSuccessful,
+            name: 'PaymentSuccessful',
+            meta: {
+                tabbar: false
+            }
+        }, //支付成功
+        {
             path: '/personalInformation',
             component: PersonalInformation,
             name: 'PersonalInformation',
@@ -152,6 +187,22 @@ const router = createRouter({
             }
         }, //个人信息
         {
+            path: '/addressBook',
+            component: AddressBook,
+            name: 'AddressBook',
+            meta: {
+                tabbar: false
+            }
+        }, //地址薄
+        {
+            path: '/addAddress',
+            component: AddAddress,
+            name: 'AddAddress',
+            meta: {
+                tabbar: false
+            }
+        }, //新增地址
+        {
             path: '/billingRules',
             component: BillingRules,
             name: 'BillingRules',
@@ -159,6 +210,15 @@ const router = createRouter({
                 tabbar: false
             }
         }, //运价规则
+        {
+            path: '/aboutUs',
+            component: AboutUs,
+            name: 'AboutUs',
+            meta: {
+                tabbar: false
+            }
+        }, //关于我们
+
         {
             path: '/googleMap',
             component: GoogleMap,
