@@ -2,7 +2,7 @@
   <!-- 帮助与支持 -->
   <nav-bar
     :title="$t('helpSupport')"
-    :needBack="ture"
+    
     :onClickLeft="() => $router.push('/')"
   ></nav-bar>
   <div class="help-support">

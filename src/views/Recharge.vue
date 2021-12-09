@@ -1,6 +1,6 @@
 <template>
   <!-- 充值 -->
-  <nav-bar :title="$t('recharge')" :needBack="ture"></nav-bar>
+  <nav-bar :title="$t('recharge')"></nav-bar>
   <div class="recharge">
     <div class="title">
       {{ $t("pleaseSelectRechargeAmount") }}
@@ -13,7 +13,7 @@
             : ''
         "
         v-for="item in amountList"
-        @click="form.expect_amount = item.value"
+        @click="form.expect_amount = Number(item.value)"
         :key="item.id"
         >{{ currencyUnit }} {{ item.value }}</van-button
       >
@@ -131,7 +131,7 @@ export default {
     const rechargeLoading = ref(false);
     const form = ref({
       expect_amount: "",
-      pay_type: "",
+      pay_type: 1,
     });
     const onlinePayTypeList = ref([]);
     const amountList = ref([
@@ -160,8 +160,11 @@ export default {
         id: 5,
       },
     ]);
-    const expectAmountValidator = (val) =>
+    const expectAmountValidator = (val) => {
+      console.log("val");
+      console.log(val);
       /^100000$|^(\d|[1-9]\d)(\.\d{1,4})*$/.test(val);
+    };
     const onRecharge = () => {
       if (!form.value) return;
       rechargeLoading.value = true;
@@ -171,6 +174,7 @@ export default {
           rechargeLoading.value = false;
           if (res && res.code == 200) {
             $api.paypal({ bill_no: res.data.bill_no }).then((res) => {
+              
             });
           }
         })

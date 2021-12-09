@@ -3,7 +3,7 @@
   <div class="billing-rules">
     <nav-bar
       :title="$t('billingRules')"
-      :needBack="ture"
+      
       :onClickLeft="() => $router.push('/me')"
     ></nav-bar>
     <div class="billing">

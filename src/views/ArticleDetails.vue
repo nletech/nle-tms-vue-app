@@ -1,6 +1,6 @@
 <template>
   <!-- 文章详情 -->
-  <nav-bar :title="$t(' ')" :needBack="ture"></nav-bar>
+  <nav-bar :title="$t(' ')" ></nav-bar>
   <div class="article-details">
     <h2>{{ tittle }}</h2>
     <div class="time">{{ time }}</div>

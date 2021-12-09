@@ -1,10 +1,6 @@
 <template>
   <!-- 禁运物品 -->
-  <nav-bar
-    :title="$t('prohibitedItems')"
-    :needBack="ture"
-    :onClickLeft="() => $router.push('/helpSupport')"
-  ></nav-bar>
+  <nav-bar :title="$t('prohibitedItems')"></nav-bar>
   <div class="prohibited-items">
     <div
       class="box"

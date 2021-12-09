@@ -1,7 +1,7 @@
 <template>
   <nav-bar
     :title="$t('position')"
-    :needBack="ture"
+    
     :onClickLeft="() => $router.go(-1)"
   ></nav-bar>
   <div class="google-map-box">

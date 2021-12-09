@@ -34,7 +34,17 @@
       </div>
     </div>
 
-    <div class="ship-appointment" @click="$router.push('/shipByAppointment')">
+    <div
+      class="ship-appointment"
+      @click="
+        $router.push({
+          name: 'ShipByAppointment',
+          query: {
+            type: 1,
+          },
+        })
+      "
+    >
       <div class="appointment">
         <img src="../../public/home-img/send.png" alt="" />
         <div>
@@ -67,6 +77,8 @@ import { useI18n } from "vue-i18n"; //要在js中使用国际化
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import $api from "../api/index";
+import store from "../store/index";
+
 export default {
   components: {
     NavBar,
@@ -155,8 +167,10 @@ export default {
       });
     };
     onMounted(() => {
-      getCarousel();
-      getArticle();
+      if (store.state.token) {
+        getCarousel();
+        getArticle();
+      }
     });
     return {
       toRouter,

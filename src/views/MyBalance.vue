@@ -2,7 +2,7 @@
   <!-- 我的余额 -->
   <nav-bar
     :title="$t('myBalance')"
-    :needBack="ture"
+    
     :onClickLeft="() => $router.push('/me')"
   ></nav-bar>
   <div class="my-balance">
@@ -40,7 +40,10 @@
         <div v-for="item in billRecharge" :key="item">
           <div class="income-box">
             <div>
-              <div class="headline">{{ item.mode_name }}</div>
+              <div class="headline" v-if="activeName == 1">
+                {{ item.object_no }}
+              </div>
+              <div class="headline" v-else>{{ item.mode_name }}</div>
               <div class="subtitle">{{ item.updated_at }}</div>
             </div>
             <div>
@@ -100,7 +103,7 @@ export default {
       });
     }; //财务记录
     const getBillVerify = () => {
-      $api.getBillVerify().then((res) => {
+      $api.getBillVerify({ status: 2 }).then((res) => {
         billRecharge.value = res.data.data;
       });
     }; //对账账单

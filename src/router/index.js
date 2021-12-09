@@ -23,6 +23,12 @@ const PaymentSuccessful = loadonDemand('PaymentSuccessful')
 
 const ExpressQuery = loadonDemand('ExpressQuery')
 const ShipByAppointment = loadonDemand('ShipByAppointment')
+const ItemInformation = loadonDemand('ItemInformation')
+const TermsDetails = loadonDemand('TermsDetails')
+const ToPay = loadonDemand('ToPay')
+const SuccessfullyOrdered = loadonDemand('SuccessfullyOrdered')
+
+
 
 const Me = loadonDemand('Me')
 const MyBalance = loadonDemand('MyBalance')
@@ -130,15 +136,6 @@ const router = createRouter({
             }
         }, //常见问题
         {
-            path: '/expressQuery',
-            component: ExpressQuery,
-            name: 'ExpressQuery',
-            meta: {
-                tabbar: true
-            }
-        },
-
-        {
             path: '/shipByAppointment',
             component: ShipByAppointment,
             name: 'ShipByAppointment',
@@ -147,13 +144,55 @@ const router = createRouter({
             }
         }, //预约寄件
         {
+            path: '/itemInformation',
+            component: ItemInformation,
+            name: 'ItemInformation',
+            meta: {
+                tabbar: false
+            }
+        }, //物品信息
+        {
+            path: '/toPay',
+            component: ToPay,
+            name: 'ToPay',
+            meta: {
+                tabbar: false
+            }
+        }, //支付
+        {
+            path: '/successfullyOrdered',
+            component: SuccessfullyOrdered,
+            name: 'SuccessfullyOrdered',
+            meta: {
+                tabbar: false
+            }
+        }, //下单成功
+        {
+            path: '/termsDetails',
+            component: TermsDetails,
+            name: 'TermsDetails',
+            meta: {
+                tabbar: false
+            }
+        }, //条款详情
+        {
+            path: '/expressQuery',
+            component: ExpressQuery,
+            name: 'ExpressQuery',
+            meta: {
+                tabbar: true
+            }
+        }, //快件查询
+
+
+        {
             path: '/me',
             component: Me,
             name: 'Me',
             meta: {
                 tabbar: true
             }
-        },
+        }, //我的
         {
             path: '/myBalance',
             component: MyBalance,

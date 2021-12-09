@@ -1,10 +1,6 @@
 <template>
   <!-- 常见问题 -->
-  <nav-bar
-    :title="$t('commonProblem')"
-    :needBack="ture"
-    :onClickLeft="() => $router.push('/helpSupport')"
-  ></nav-bar>
+  <nav-bar :title="$t('commonProblem')"></nav-bar>
   <div class="common-problem">
     <div
       class="box"

@@ -1,6 +1,6 @@
 <template>
   <!-- 关于我们 -->
-  <nav-bar :title="$t('aboutUs')" :needBack="ture"></nav-bar>
+  <nav-bar :title="$t('aboutUs')" ></nav-bar>
   <div class="about-uz">
     <div>
       红兔TMS-H5是恩尔伊科技开发的个人快递业务管理软件,为客户提供自助下单、查单、订单管理、个性服务等一站式掌上便捷快件服务.

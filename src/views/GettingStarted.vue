@@ -1,10 +1,6 @@
 <template>
   <!-- 入门教程 -->
-  <nav-bar
-    :title="$t('gettingStarted')"
-    :needBack="ture"
-    :onClickLeft="() => $router.push('/helpSupport')"
-  ></nav-bar>
+  <nav-bar :title="$t('gettingStarted')"></nav-bar>
   <div class="getting-started">
     <div
       class="box"

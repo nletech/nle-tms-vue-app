@@ -3,7 +3,7 @@
   <div class="personal-information">
     <nav-bar
       :title="$t('personalInformation')"
-      :needBack="ture"
+      
       :onClickLeft="() => $router.push('/me')"
     ></nav-bar>
     <div class="from">
