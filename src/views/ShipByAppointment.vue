@@ -399,6 +399,8 @@ export default {
         express_first_no: route.params.express_first_no,
         picture_list: route.params.picture_list,
       };
+      console.log("obj");
+      console.log(obj);
       val.value = `${route.params.express_first_no},${route.params.weight}(${weightUnit.value}) ,${route.params.expect_quantity}(件)`;
       form.value.package_list.push(obj);
       if (form.value.package_list.length > 0) {
@@ -416,6 +418,7 @@ export default {
             weight: form.value.package_list[0].weight,
             expect_quantity: form.value.package_list[0].expect_quantity,
             express_first_no: form.value.package_list[0].express_first_no,
+            picture_list: form.value.package_list[0].picture_list,
           },
         });
       }

@@ -6,7 +6,7 @@
     :onClickLeft="() => $router.push('/')"
   ></nav-bar>
   <div class="help-support">
-    <img src="../../public/home-img/img.png" class="img" />
+    <img src="/home-img/img.png" class="img" />
     <div class="list">
       <div v-for="item in list" :key="item" @click="$router.push(item.router)">
         <img :src="item.img" alt="" />
@@ -53,17 +53,17 @@ export default {
 
     const list = [
       {
-        img: "../../public/home-img/getting-started.png",
+        img: "/home-img/getting-started.png",
         title: t("gettingStarted"),
         router: "/gettingStarted",
       },
       {
-        img: "../../public/home-img/prohibited-items.png",
+        img: "/home-img/prohibited-items.png",
         title: t("prohibitedItems"),
         router: "/prohibitedItems",
       },
       {
-        img: "../../public/home-img/common-problem.png",
+        img: "/home-img/common-problem.png",
         title: t("commonProblem"),
         router: "/commonProblem",
       },

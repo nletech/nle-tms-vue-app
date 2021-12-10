@@ -58,11 +58,7 @@
                 :class="i === onlinePayTypeList.length - 1 ? 'radius-last' : ''"
               >
                 <template #title>
-                  <van-image
-                    src="../../public/me-img/Paypal.png"
-                    fit="cover"
-                    class="img"
-                  />
+                  <van-image src="/me-img/Paypal.png" fit="cover" class="img" />
                   <span>{{ item.name }}</span>
                 </template>
                 <template #right-icon>
@@ -174,7 +170,9 @@ export default {
           rechargeLoading.value = false;
           if (res && res.code == 200) {
             $api.paypal({ bill_no: res.data.bill_no }).then((res) => {
-              
+              if (res.code == 200) {
+                window.location.href = res.data.approvalUrl;
+              }
             });
           }
         })

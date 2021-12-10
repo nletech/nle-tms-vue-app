@@ -8,7 +8,7 @@
     <van-form @submit="onRegister" class="form">
       <van-field
         v-model="state.email"
-        left-icon="../../public/login-icon/mail.png"
+        left-icon="/login-icon/mail.png"
         name="email"
         :rules="[
           {
@@ -32,7 +32,7 @@
       </van-field>
       <van-field
         v-model="state.code"
-        left-icon="../../public/login-icon/verification-code.png"
+        left-icon="/login-icon/verification-code.png"
         name="code"
         :rules="[
           {
@@ -44,7 +44,7 @@
       />
       <van-field
         v-model="state.new_password"
-        left-icon="../../public/login-icon/password.png"
+        left-icon="/login-icon/password.png"
         name="new_password"
         :type="viewType"
         :rules="[
@@ -57,7 +57,7 @@
       />
       <van-field
         v-model="state.confirm_new_password"
-        left-icon="../../public/login-icon/password.png"
+        left-icon="/login-icon/password.png"
         name="confirm_new_password"
         :type="viewType"
         :rules="[

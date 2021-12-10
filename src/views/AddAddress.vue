@@ -20,7 +20,7 @@
       </div>
       <div>
         <van-button
-          icon="../../public/me-img/position.png"
+          icon="/me-img/position.png"
           type="primary"
           plain
           size="mini"

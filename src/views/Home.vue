@@ -46,7 +46,7 @@
       "
     >
       <div class="appointment">
-        <img src="../../public/home-img/send.png" alt="" />
+        <img src="/home-img/send.png" alt="" />
         <div>
           <div class="ship-title">
             {{ $t("shipByAppointment") }}
@@ -95,19 +95,19 @@ export default {
     const news = ref({});
     const list = [
       {
-        img: "../../public/home-img/img-1.png",
+        img: "/home-img/img-1.png",
         title: t("freightEstimate"),
         introduce: t("userEstimateShipping"),
         router: "/",
       },
       {
-        img: "../../public/home-img/img-2.png",
+        img: "/home-img/img-2.png",
         title: t("onlineEnquiry"),
         introduce: t("userNetworkQuery"),
         router: "/",
       },
       {
-        img: "../../public/home-img/img-3.png",
+        img: "/home-img/img-3.png",
         title: t("helpAndSupport"),
         introduce: t("understandShippingConsiderations"),
         router: "/helpSupport",

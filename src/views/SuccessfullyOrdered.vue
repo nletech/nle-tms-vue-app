@@ -2,7 +2,7 @@
   <!-- 下单成功 -->
   <div class="successfully-ordered">
     <div class="successfully">
-      <img src="../../public/home-img/success.png" alt="" width="30" />
+      <img src="/home-img/success.png" alt="" width="30" />
       <h1>{{ $t("successfullyOrdered") }}</h1>
     </div>
     <div class="time">

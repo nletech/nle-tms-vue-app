@@ -7,8 +7,8 @@
           class="avatar"
           fit="cover"
           round
-          error-icon="../../public/me-img/me.png"
-          src="../../public/me-img/me.png"
+          error-icon="/me-img/me.png"
+          src="/me-img/me.png"
         >
         </van-image>
         <h3>{{ userInfo.name }}</h3>
@@ -18,33 +18,35 @@
         <div class="my-purse">
           {{ $t("myPurse") }}
         </div>
-        <div class="num" @click="$router.push('/myBalance')">{{ balance }}</div>
+        <div class="num" @click="$router.push('/myBalance')">
+          {{ balance || "0.00" }}
+        </div>
         <div class="balance">{{ $t("balance") }}</div>
       </div>
       <div class="cell">
         <van-cell
-          icon="../../public/me-img/personal-Information.png"
+          icon="/me-img/personal-Information.png"
           :title="$t('personalInformation')"
           is-link
           to="PersonalInformation"
           title-style="text-align: left"
         />
         <van-cell
-          icon="../../public/me-img/address-book.png"
+          icon="/me-img/address-book.png"
           :title="$t('addressBook')"
           is-link
           to="AddressBook"
           title-style="text-align: left"
         />
         <van-cell
-          icon="../../public/me-img/billing-rules.png"
+          icon="/me-img/billing-rules.png"
           :title="$t('billingRules')"
           is-link
           to="BillingRules"
           title-style="text-align: left"
         />
         <van-cell
-          icon="../../public/me-img/about.png"
+          icon="/me-img/about.png"
           :title="$t('aboutUs')"
           is-link
           to="AboutUs"
@@ -83,6 +85,13 @@ export default {
     const store = useStore();
     const router = useRouter();
     const balance = ref();
+    const userInfo = computed(() => store.state.userInfo);
+    store.dispatch("getUserInfo");
+    const getLedger = () => {
+      $api.getLedger().then((res) => {
+        balance.value = res.data.balance;
+      });
+    };
     const logOut = () => {
       Dialog.confirm({
         message: t("areSureWantLogOut"),
@@ -96,13 +105,6 @@ export default {
         })
         .catch(() => {});
     };
-    const getLedger = () => {
-      $api.getLedger().then((res) => {
-        balance.value = res.data.balance;
-      });
-    };
-    const userInfo = computed(() => store.state.userInfo);
-    // store.dispatch("getUserInfo");
     onMounted(() => {
       getLedger();
     });
@@ -119,7 +121,7 @@ export default {
 .me {
   .header {
     height: 180px;
-    background: url(../../public/me-img/banner.png) center;
+    background: url(/me-img/banner.png) center;
     // background-position: center center;
     .header-box {
       position: relative;

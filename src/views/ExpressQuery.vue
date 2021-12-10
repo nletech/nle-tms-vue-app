@@ -49,12 +49,12 @@
                 <div>
                   <img
                     v-if="item.status == 3 && item.pay_status !== 1"
-                    src="../../public/query-img/arrow-tangerine.png"
+                    src="/query-img/arrow-tangerine.png"
                     alt=""
                   />
                   <img
                     v-else
-                    src="../../public/query-img/arrow-green.png"
+                    src="/query-img/arrow-green.png"
                     alt=""
                   />
                 </div>

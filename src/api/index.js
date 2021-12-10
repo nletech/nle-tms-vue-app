@@ -8,11 +8,14 @@ import {
 export default {
   getUserInfo: () => GET(`merchant_h5/company`), //公司信息
   getDictionary: () => GET(`merchant_h5/common/dictionary`), //数据
-  login: (data) => POST(`merchant_h5/login`, data),
-  register: (data) => POST(`merchant_h5/register`, data),
-  getResetRegisterEmailCode: (data) => POST(`merchant_h5/register/apply`, data),
-  getResetPasswordEmailCode: (data) => POST(`merchant_h5/password/code`, data),
-  getResetPassword: (data) => PUT(`merchant_h5/password/reset`, data),
+  login: (data) => POST(`merchant_h5/login`, data), //登录
+  register: (data) => POST(`merchant_h5/register`, data), //注册
+  getResetRegisterEmailCode: (data) => POST(`merchant_h5/register/apply`, data), //注册验证码
+  getResetPasswordEmailCode: (data) => POST(`merchant_h5/password/code`, data), //密码验证码
+  getResetPassword: (data) => PUT(`merchant_h5/password/reset`, data), //忘记密码
+  getFace: (data) => GET(`merchant_h5/customize`, data), //获取自定义界面
+  getTimezone: (data) => PUT(`merchant_h5/timezone`, data), //时区
+
   // 首页
   getCarousel: () => GET('merchant_h5/carousel', null), //轮播图
   getArticle: () => GET('merchant_h5/article', null), //文章查询
@@ -24,9 +27,8 @@ export default {
   order: (data) => POST('merchant_h5/order', data), //订单新增
   getDetailsOrder: (id) => GET(`merchant_h5/order/${id} `, null), //订单详情
   orderPay: (data) => POST('merchant_h5/order/pay', data), //订单支付
-  imageUpload: (data) => POST('/merchant_h5/upload/image', data), //图片上传
-
-
+  imageUpload: (data, config) => POST('merchant_h5/upload/image', data, config), //图片上传
+  getImageDir: (data) => GET('merchant_h5/upload/image-dir', data), //图片上传目录
 
   // 快件查询
   getOrder: (data) => GET('merchant_h5/order', data), //订单查询

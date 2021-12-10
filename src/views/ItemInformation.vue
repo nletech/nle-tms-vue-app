@@ -36,7 +36,6 @@
           >
             <template #input>
               <van-stepper
-                :decimal-length="1"
                 v-model="form.weight"
                 input-width="80px"
                 button-size="32"
@@ -57,7 +56,6 @@
           >
             <template #input>
               <van-stepper
-                :decimal-length="1"
                 v-model="form.expect_quantity"
                 input-width="80px"
                 button-size="32"
@@ -73,17 +71,30 @@
             <span class="custom-title">{{ $t("itemPhotos") }}</span>
             <van-field name="uploader">
               <template #input>
+                <van-image
+                  class="list-img"
+                  v-for="(item, index) in form.picture_list"
+                  :key="index"
+                  :src="item"
+                  @click="previewImage(item, index)"
+                >
+                </van-image>
+                <van-icon
+                  v-if="form.picture_list.length >= 1"
+                  name="cross"
+                  @click="onDelImage(index)"
+                />
                 <van-uploader
-                  v-model="form.picture_list"
+                  v-if="form.picture_list.length < 1"
                   :max-count="1"
-                  :after-read="onRead"
+                  :after-read="afterRead"
+                  :preview-image="false"
                 />
               </template>
             </van-field>
           </template>
         </van-cell>
       </van-cell-group>
-
       <div style="margin: 16px">
         <van-button round block type="success " native-type="submit">
           {{ $t("save") }}
@@ -94,6 +105,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import baseApi from "../api/baseApi";
+
 import NavBar from "../components/NavBar.vue";
 import {
   Form,
@@ -104,11 +118,14 @@ import {
   Stepper,
   Uploader,
   Tag,
+  ImagePreview,
+  Image as VanImage,
+  Icon,
 } from "vant";
-import { ref, computed, onActivated } from "vue";
+import { ref, computed, onActivated, onMounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter, useRoute } from "vue-router";
-
+import $api from "../api/index";
 export default {
   name: "ItemInformation",
   components: {
@@ -121,6 +138,8 @@ export default {
     [Stepper.name]: Stepper,
     [Uploader.name]: Uploader,
     [Tag.name]: Tag,
+    [VanImage.name]: VanImage,
+    [Icon.name]: Icon,
   },
   setup() {
     const router = useRouter();
@@ -135,6 +154,10 @@ export default {
       picture_list: [],
     });
     const onSubmit = () => {
+      let picture_list = "";
+      form.value.picture_list.map((item) => {
+        picture_list = item;
+      });
       router.push({
         name: "ShipByAppointment",
         params: {
@@ -142,20 +165,50 @@ export default {
           weight: form.value.weight,
           expect_quantity: form.value.expect_quantity,
           express_first_no: form.value.express_first_no,
+          picture_list: picture_list,
         },
       });
     };
-
-    const onRead = (file) => {
-      let formData = new FormData();
-      formData.append("file", file.file);
-      // $api.imageUpload(formData).then((res) => {});
+    //点击图片放大浏览
+    const previewImage = (url, index) => {
+      ImagePreview([url]);
     };
+    //删除图片
+    const onDelImage = (index) => {
+      form.value.picture_list.splice(index, 1);
+    };
+    const afterRead = (file) => {
+      let formData = new FormData();
+      formData.append("image", file.file);
+      let config = {
+        headers: {
+          //添加请求头
+          // "content-type": "multipart/form-data",
+          Authorization: `Bearer ${store.state.token}`,
+        },
+      };
+      // 请求参数传不过去，使用原生可以
+      axios
+        .post(baseApi + "merchant_h5/upload/image", formData, config)
+        .then((res) => {
+          let img = res.data.data.path;
+          form.value.picture_list.push(img);
+        });
+      // $api.imageUpload({ image: formData }, config).then((res) => {});
+    };
+    onMounted(() => {
+      if (route.query.picture_list) {
+        let img = route.query.picture_list;
+        form.value.picture_list.push(img);
+      }
+    });
     return {
       weightUnit,
       form,
       onSubmit,
-      onRead,
+      afterRead,
+      previewImage,
+      onDelImage,
     };
   },
 };
@@ -172,6 +225,14 @@ export default {
     color: #ffa785;
     margin: 0 15px;
     border-bottom: 1px solid #eaeaea;
+  }
+  .list-img {
+    width: 80px;
+    height: 80px;
+  }
+  .van-icon {
+    margin-top: -60px;
+    margin-left: -15px;
   }
 }
 </style>

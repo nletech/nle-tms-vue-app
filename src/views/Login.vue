@@ -1,14 +1,15 @@
 <template>
-<!-- 登录 -->
+  <!-- 登录 -->
   <div class="login" id="container">
     <div class="logo">
-      <img src="../assets/login-logo.jpg" style="width: 100px" alt="" />
+      <img :src="logo" style="width: 100px" alt="" v-if="logo" />
+      <img v-else src="../assets/login-logo.jpg" style="width: 100px" alt="" />
       <h1>红兔TMS</h1>
     </div>
     <van-form @submit="onSubmit" class="form">
       <van-field
         v-model="state.username"
-        left-icon="../../public/login-icon/mail.png"
+        left-icon="/login-icon/mail.png"
         name="username"
         :rules="[
           {
@@ -21,7 +22,7 @@
       />
       <van-field
         v-model="state.password"
-        left-icon="../../public/login-icon/password.png"
+        left-icon="/login-icon/password.png"
         name="password"
         :type="viewType"
         :rules="[
@@ -128,6 +129,7 @@ export default {
     const router = useRouter();
     const submitLoading = ref(false);
     const routerIsFrom = ref(false);
+    const logo = ref();
     const emailValidator = (val) =>
       /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(val);
 
@@ -146,6 +148,7 @@ export default {
         const res = await $api.login(values);
         if (res && res.code == 200) {
           Toast.success(t("loginSuccessful"));
+          getTimezone();
           router.push("/");
           store.commit(ORDER_MEAL_TOKEN, res.data.access_token);
           store.commit(
@@ -171,10 +174,33 @@ export default {
     const getService = () => {
       $api.getService().then((res) => {});
     };
+    // 时区
+    const getTimezone = () => {
+      let event = new Date();
+      let time = event.toString();
+      let arr = time.split(" ");
+      let list = arr[5];
+      let el = list.split("T");
+      let timezone = el[1];
+      $api.getTimezone({ timezone }).then((res) => {});
+    };
     onMounted(() => {
+      let host = window.location.host;
+      // let host = "https://admin.jh77express.com";
+      if (host == "dev-tms-admin.nle-tech.com") {
+      } else {
+        $api.getFace({ url: host }).then((res) => {
+          // let host = "https://admin.jh77express.com";
+          // 判断界面展示
+          if (res.code == 200) {
+            logo.value = res.data.consumer_login_title;
+          }
+        });
+      }
       getService();
     });
     return {
+      logo,
       routerIsFrom,
       emailValidator,
       passValidator,

@@ -1,11 +1,10 @@
 <template>
   <nav-bar
     :title="$t('position')"
-    
     :onClickLeft="() => $router.go(-1)"
   ></nav-bar>
   <div class="google-map-box">
-    <div class="google-map">
+    <!-- <div class="google-map">
       <div class="control-box">
         <van-field
           id="pac_input"
@@ -26,39 +25,39 @@
         <Marker :options="{ position: shopLat }" />
         <Marker :options="{ position: clientLat }" />
       </GoogleMap>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
 import { reactive, ref } from "vue";
 import { Field } from "vant";
-import NavBar from "../components/NavBar.vue";
+// import NavBar from "../components/NavBar.vue";
 import { useStore } from "vuex";
-import { GoogleMap, Marker, Polyline } from "vue3-google-map";
+// import { GoogleMap, Marker, Polyline } from "vue3-google-map";
 
 export default {
   components: {
     NavBar,
     [Field.name]: Field,
-    GoogleMap,
-    Marker,
-    Polyline,
+    // GoogleMap,
+    // Marker,
+    // Polyline,
   },
   setup() {
     const store = useStore();
-    const searchBoxValue = ref("");
-    const center = reactive({
-      lat: 52.666666,
-      lng: -10.33333,
-      disableDefaultUI: true,
-    });
-    // const country = computed(() => store.state.country);
-    const key = "AIzaSyADSJjhz-C62Kp69blJBBo71fqNyC7oZkY";
+    // const searchBoxValue = ref("");
+    // const center = reactive({
+    //   lat: 52.666666,
+    //   lng: -10.33333,
+    //   disableDefaultUI: true,
+    // });
+    // // const country = computed(() => store.state.country);
+    // const key = "AIzaSyADSJjhz-C62Kp69blJBBo71fqNyC7oZkY";
     return {
-      searchBoxValue,
-      key,
-      center,
+      // searchBoxValue,
+      // key,
+      // center,
     };
   },
 };

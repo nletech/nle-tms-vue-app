@@ -2,7 +2,7 @@
   <!-- 支付完成 -->
   <div class="payment-successful">
     <div class="successful">
-      <img src="../../public/home-img/success.png" alt="" width="30" />
+      <img src="/home-img/success.png" alt="" width="30" />
       <h2>{{ $t("paymentCompleted") }}</h2>
     </div>
     <div class="btn">
