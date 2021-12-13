@@ -25,6 +25,5 @@ const volumeUnit = localStorage.getItem(VOLNME_UNIT)
 store.commit(VOLNME_UNIT, volumeUnit || '')
 const weightUnit = localStorage.getItem(WEIGHT_UNIT)
 store.commit(WEIGHT_UNIT, weightUnit || '')
-
 store.dispatch('initCart', token)
 app.use(Lazyload).use(store).use(router).use(VueI18n).mount('#app')

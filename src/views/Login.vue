@@ -157,7 +157,9 @@ export default {
           );
           store.commit(VOLNME_UNIT, res.data.company_config.volume_unit_symbol);
           store.commit(WEIGHT_UNIT, res.data.company_config.weight_unit_symbol);
-          store.commit(GOOGLE_MAP, res.data.company_config.country);
+          // 异步操作
+          store.dispatch("initCart", res.data.access_token);
+          // store.commit(GOOGLE_MAP, res.data.company_config.country);
           // if (routerIsFrom.value) {
           //   router.push("/");
           // } else {

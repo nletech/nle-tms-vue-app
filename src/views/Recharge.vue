@@ -58,7 +58,7 @@
                 :class="i === onlinePayTypeList.length - 1 ? 'radius-last' : ''"
               >
                 <template #title>
-                  <van-image src="/me-img/Paypal.png" fit="cover" class="img" />
+                  <img src="/me-img/paypal.png" fit="cover" class="img" />
                   <span>{{ item.name }}</span>
                 </template>
                 <template #right-icon>

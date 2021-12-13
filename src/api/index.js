@@ -40,6 +40,8 @@ export default {
   getBillRecharge: (data) => GET(`merchant_h5/bill/recharge`, data), //充值记录
   recharge: (data) => POST(`merchant_h5/bill/recharge`, data), //充值
   paypal: (data) => POST(`merchant_h5/payment/paypal`, data), //发起支付
+  putPaypal: (data) => PUT(`merchant_h5/payment/paypal`, data), //完成支付
+
   getMerchant: () => GET(`merchant`, null), //个人信息
   putMerchant: (data) => PUT(`merchant`, data), //修改个人信息
   getTransportPrice: (data) => GET(`merchant_h5/transport-price`, data), //运价规则

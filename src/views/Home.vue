@@ -194,7 +194,7 @@ export default {
     width: 100%;
     height: 180px;
   }
-  /deep/.van-notice-bar {
+  :deep(.van-notice-bar) {
     width: 80% !important;
   }
   .notice-title {
@@ -252,7 +252,7 @@ export default {
       color: #999999;
     }
   }
-  /deep/.van-swipe__indicator {
+  :deep(.van-swipe__indicator) {
     margin-bottom: 5px;
     width: 7px;
     height: 7px;

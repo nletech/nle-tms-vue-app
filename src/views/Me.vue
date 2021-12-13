@@ -86,12 +86,6 @@ export default {
     const router = useRouter();
     const balance = ref();
     const userInfo = computed(() => store.state.userInfo);
-    store.dispatch("getUserInfo");
-    const getLedger = () => {
-      $api.getLedger().then((res) => {
-        balance.value = res.data.balance;
-      });
-    };
     const logOut = () => {
       Dialog.confirm({
         message: t("areSureWantLogOut"),
@@ -104,6 +98,11 @@ export default {
           router.push("/login");
         })
         .catch(() => {});
+    };
+    const getLedger = () => {
+      $api.getLedger().then((res) => {
+        balance.value = res.data.balance;
+      });
     };
     onMounted(() => {
       getLedger();

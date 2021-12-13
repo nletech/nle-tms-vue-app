@@ -180,21 +180,35 @@ export default {
     const afterRead = (file) => {
       let formData = new FormData();
       formData.append("image", file.file);
-      let config = {
+      let fileConfig = {
         headers: {
-          //添加请求头
-          // "content-type": "multipart/form-data",
-          Authorization: `Bearer ${store.state.token}`,
+          "Content-Type": "multipart/form-data",
         },
+        // 自定义传参
+        transformRequest: [
+          function (data) {
+            return data;
+          },
+        ],
       };
+      $api.imageUpload(formData, fileConfig).then((res) => {
+        let img = res.data.path;
+        form.value.picture_list.push(img);
+      });
+      // let config = {
+      //   headers: {
+      //     //添加请求头
+      //     // "content-type": "multipart/form-data",
+      //     Authorization: `Bearer ${store.state.token}`,
+      //   },
+      // };
       // 请求参数传不过去，使用原生可以
-      axios
-        .post(baseApi + "merchant_h5/upload/image", formData, config)
-        .then((res) => {
-          let img = res.data.data.path;
-          form.value.picture_list.push(img);
-        });
-      // $api.imageUpload({ image: formData }, config).then((res) => {});
+      // axios
+      //   .post(baseApi + "merchant_h5/upload/image", formData, config)
+      //   .then((res) => {
+      //     let img = res.data.data.path;
+      //     form.value.picture_list.push(img);
+      //   });
     };
     onMounted(() => {
       if (route.query.picture_list) {

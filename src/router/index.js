@@ -1,6 +1,6 @@
 import {
     createRouter,
-    createWebHashHistory
+    createWebHistory
 } from 'vue-router'
 import store from '../store/index'
 const loadonDemand = path => {
@@ -44,9 +44,9 @@ const GoogleMap = loadonDemand('GoogleMap')
 
 const router = createRouter({
     // mode: 'history',
-    // history: createWebHistory(),去掉#的模式
-    base: '/',
-    history: createWebHashHistory(),
+    history: createWebHistory(), //去掉#的模式
+    // base: '/',
+    // history: createWebHashHistory(),
     routes: [{
             path: '/login',
             component: Login,

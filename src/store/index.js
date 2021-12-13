@@ -27,8 +27,6 @@ const store = createStore({
     weightUnit: '', //重量
     country: "",
     userInfo: {},
-
-
     selectedGoods: [],
     allCartGoods: [],
     checkoutSelectedAddress: {},
@@ -61,12 +59,12 @@ const store = createStore({
       state.weightUnit = data
       localStorage.setItem(WEIGHT_UNIT, data)
     }, //重量
-    [GOOGLE_MAP](state, data) {
-      state.country = data
-    }, //地图
     [UPDATE_USER_INFO](state, data) {
       state.userInfo = data
     }, //公司信息
+    [GOOGLE_MAP](state, data) {
+      state.country = data
+    }, //地图
 
 
 
