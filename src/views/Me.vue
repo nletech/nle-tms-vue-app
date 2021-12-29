@@ -11,8 +11,8 @@
           src="/me-img/me.png"
         >
         </van-image>
-        <h3>{{ userInfo.name }}</h3>
-        <h3>ID:{{ userInfo.company_code }}</h3>
+        <h3>{{ userForm.name }}</h3>
+        <h3>ID:{{ userForm.code }}</h3>
       </div>
       <div class="paid">
         <div class="my-purse">
@@ -86,6 +86,7 @@ export default {
     const router = useRouter();
     const balance = ref();
     const userInfo = computed(() => store.state.userInfo);
+    const userForm = ref({});
     const logOut = () => {
       Dialog.confirm({
         message: t("areSureWantLogOut"),
@@ -104,11 +105,18 @@ export default {
         balance.value = res.data.balance;
       });
     };
+    const getMerchant = () => {
+      $api.getMerchant().then((res) => {
+        userForm.value = res.data;
+      });
+    };
     onMounted(() => {
       getLedger();
+      getMerchant();
     });
     return {
       userInfo,
+      userForm,
       logOut,
       balance,
     };

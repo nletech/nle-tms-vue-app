@@ -157,4 +157,9 @@ export default {
     actualPayment: '实付款',
     orderDetails: "订单详情",
     completePayment: "完成支付",
+    numberFirstParcels: '首包裹数量',
+    firstParcelCost: "首包裹费用",
+    renewPackageBilling: "续包裹计费",
+    startingQuantity: "起始数量>",
+    cutQuantity: "截止数量<=",
 }

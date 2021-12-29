@@ -158,6 +158,9 @@ export default {
     actualPayment: 'Actual payment',
     orderDetails: "order details",
     completePayment: "Complete payment",
-
-
+    numberFirstParcels: 'Number of first parcels',
+    firstParcelCost: "First parcel cost",
+    renewPackageBilling: "Renew package billing",
+    startingQuantity: "Starting quantity",
+    cutQuantity: "Cut-off quantity",
 }

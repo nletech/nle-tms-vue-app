@@ -29,13 +29,11 @@
             @load="onLoad"
             class="list"
           >
-            <div
-              class="list-item"
-              v-for="item in itemList.list"
-              :key="item.id"
-              @click="$route.query.type ? toShipAppointment(item) : ''"
-            >
-              <div class="item-box">
+            <div class="list-item" v-for="item in itemList.list" :key="item.id">
+              <div
+                class="item-box"
+                @click="$route.query.type ? toShipAppointment(item) : ''"
+              >
                 <div class="item-font">
                   {{ item.place_fullname }}&nbsp;&nbsp;&nbsp;
                   {{ item.place_phone }}

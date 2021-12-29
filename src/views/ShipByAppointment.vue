@@ -193,13 +193,18 @@
       </div>
       <div>
         <div class="basic-freight">
-          {{ currencyUnit }} {{ form.count_settlement_amount }}
+          {{ currencyUnit }}
+          {{ form.count_settlement_amount ? form.count_settlement_amount : "" }}
         </div>
         <div class="fixed-costs">
-          {{ currencyUnit }} {{ form.starting_price }}
+          {{ currencyUnit }}
+          {{ form.starting_price ? form.starting_price : "" }}
         </div>
         <div>
-          {{ currencyUnit }} {{ form.package_list[0].settlement_amount }}
+          {{ currencyUnit }}
+          {{
+            form.package_list.length > 0 ? form.package_list[0].settlement_amount : ""
+          }}
         </div>
       </div>
     </div>
@@ -253,7 +258,7 @@ import {
 } from "vant";
 import NavBar from "../components/NavBar.vue";
 import { useRouter, useRoute } from "vue-router";
-import { ref, onActivated, computed } from "vue";
+import { ref, onActivated, computed, onMounted } from "vue";
 import { useStore } from "vuex";
 import $api from "../api/index";
 import { useI18n } from "vue-i18n"; //要在js中使用国际化
@@ -378,10 +383,14 @@ export default {
         place_lon: form.value.place_lon,
       };
       $api.getOrderDate(data).then((res) => {
-        columns.value = res.data;
-        if (!route.query.id) {
-          form.value.execution_date = res.data[0];
-          form.value.second_execution_date = res.data[0];
+        if (res.code == 200) {
+          columns.value = res.data;
+          if (!route.query.id) {
+            form.value.execution_date = res.data[0];
+            form.value.second_execution_date = res.data[0];
+          }
+        } else {
+          Toast.fail(res.msg);
         }
       });
       if (form.value.execution_date != "") {
@@ -438,7 +447,7 @@ export default {
         $api.getOrderPriceCount(form.value).then((res) => {
           if (res.code == 200) {
             form.value = res.data;
-            form.value = res.data;
+            // form.value = res.data;
           } else {
             Toast.fail(res.msg);
           }
@@ -545,7 +554,12 @@ export default {
         anotherOrder();
       }
     });
-
+    onMounted(() => {
+      if (!store.state.token) {
+        router.push("/login");
+        Toast.fail(t("signInFirst"));
+      }
+    });
     return {
       requireHead,
       requiredItem,
