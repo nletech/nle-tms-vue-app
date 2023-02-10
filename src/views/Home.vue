@@ -127,22 +127,46 @@ export default {
     };
     //轮播图
     const getCarousel = () => {
-      $api.getCarousel().then((res) => {
-        images.value = res.data.data;
-        // 获取滚动时长
-        res.data.data.map((el) => {
-          if (el.rolling_time == 1) {
-            return (rollingTime.value = 1000);
-          } else if (el.rolling_time == 2) {
-            return (rollingTime.value = 2000);
-          } else if (el.rolling_time == 3) {
-            return (rollingTime.value = 3000);
-          } else if (el.rolling_time == 4) {
-            return (rollingTime.value = 4000);
-          } else if (el.rolling_time == 5) {
-            return (rollingTime.value = 5000);
-          }
-        });
+      let host = window.location.host;
+      // let host = "https://admin.jh77express.com";
+      $api.getFace({ url: host }).then((res) => {
+        // let host = "https://admin.jh77express.com";
+        // 判断界面展示
+        if (res.code == 200) {
+          images.value = res.data.carousel_list;
+          res.data.carousel_list.map((el) => {
+            if (el.rolling_time == 1) {
+              return (rollingTime.value = 1000);
+            } else if (el.rolling_time == 2) {
+              return (rollingTime.value = 2000);
+            } else if (el.rolling_time == 3) {
+              return (rollingTime.value = 3000);
+            } else if (el.rolling_time == 4) {
+              return (rollingTime.value = 4000);
+            } else if (el.rolling_time == 5) {
+              return (rollingTime.value = 5000);
+            }
+          });
+        }
+        //  else {
+        //   $api.getCarousel().then((res) => {
+        //     images.value = res.data.data;
+        //     // 获取滚动时长
+        //     res.data.data.map((el) => {
+        //       if (el.rolling_time == 1) {
+        //         return (rollingTime.value = 1000);
+        //       } else if (el.rolling_time == 2) {
+        //         return (rollingTime.value = 2000);
+        //       } else if (el.rolling_time == 3) {
+        //         return (rollingTime.value = 3000);
+        //       } else if (el.rolling_time == 4) {
+        //         return (rollingTime.value = 4000);
+        //       } else if (el.rolling_time == 5) {
+        //         return (rollingTime.value = 5000);
+        //       }
+        //     });
+        //   });
+        // }
       });
     };
     const getArticle = () => {

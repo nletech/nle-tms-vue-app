@@ -8,7 +8,7 @@ import {
 export default {
   getUserInfo: () => GET(`merchant_h5/company`), //公司信息
   getDictionary: () => GET(`merchant_h5/common/dictionary`), //数据
-  login: (data) => POST(`merchant_h5/login`, data), //登录
+  login: (data, url) => POST(`merchant_h5/login`, data, url), //登录
   register: (data) => POST(`merchant_h5/register`, data), //注册
   getResetRegisterEmailCode: (data) => POST(`merchant_h5/register/apply`, data), //注册验证码
   getResetPasswordEmailCode: (data) => POST(`merchant_h5/password/code`, data), //密码验证码

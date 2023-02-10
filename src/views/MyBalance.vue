@@ -2,7 +2,6 @@
   <!-- 我的余额 -->
   <nav-bar
     :title="$t('myBalance')"
-    
     :onClickLeft="() => $router.push('/me')"
   ></nav-bar>
   <div class="my-balance">

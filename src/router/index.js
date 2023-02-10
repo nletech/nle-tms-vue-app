@@ -7,6 +7,7 @@ const loadonDemand = path => {
     return () => import(`../views/${path}.vue`)
 }
 const Login = loadonDemand('Login')
+const RegistrationTerms = loadonDemand('RegistrationTerms')
 const ForgetPassword = loadonDemand('ForgetPassword')
 const Register = loadonDemand('Register')
 const RegistrationSuccess = loadonDemand('RegistrationSuccess')
@@ -79,6 +80,14 @@ const router = createRouter({
                 tabbar: false
             }
         },
+        {
+            path: '/registrationTerms',
+            component: RegistrationTerms,
+            name: 'RegistrationTerms',
+            meta: {
+                tabbar: false
+            }
+        }, //注册条款详情
         {
             path: '/',
             component: Home,

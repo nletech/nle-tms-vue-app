@@ -80,7 +80,9 @@
         <template #input>
           <van-checkbox v-model="state.checked" checked-color="#58be6a">
             {{ $t("haveReadAgree") }}
-            <span style="color: rgb(17, 117, 170)"
+            <span
+              style="color: rgb(17, 117, 170)"
+              @click="$router.push('/registrationTerms')"
               >《{{ $t("redRabbitRegistrationService") }} 》
             </span>
           </van-checkbox>
@@ -130,6 +132,7 @@ export default {
     const submitLoading = ref(false);
     const routerIsFrom = ref(false);
     const logo = ref();
+    const url = window.location.host;
     const emailValidator = (val) =>
       /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(val);
 
@@ -140,12 +143,13 @@ export default {
       username: "",
       password: "",
       checked: false,
+      url,
     });
     const viewType = ref("password"); //判断密码 显示
     const onSubmit = async (values) => {
       submitLoading.value = true;
       try {
-        const res = await $api.login(values);
+        const res = await $api.login(state);
         if (res && res.code == 200) {
           Toast.success(t("loginSuccessful"));
           getTimezone();
@@ -189,16 +193,16 @@ export default {
     onMounted(() => {
       let host = window.location.host;
       // let host = "https://admin.jh77express.com";
-      if (host == "dev-tms-admin.nle-tech.com") {
-      } else {
-        $api.getFace({ url: host }).then((res) => {
-          // let host = "https://admin.jh77express.com";
-          // 判断界面展示
-          if (res.code == 200) {
-            logo.value = res.data.consumer_login_title;
-          }
-        });
-      }
+      // if (host == "dev-tms-admin.nle-tech.com") {
+      // } else {
+      $api.getFace({ url: host }).then((res) => {
+        // let host = "https://admin.jh77express.com";
+        // 判断界面展示
+        if (res.code == 200) {
+          logo.value = res.data.consumer_login_title;
+        }
+      });
+      // }
     });
     return {
       logo,
@@ -209,6 +213,7 @@ export default {
       state,
       onSubmit,
       submitLoading,
+      url,
     };
   },
 };
